@@ -1,12 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mor_sm_cal.css">
     <title>Mortgage Small Calculator</title>
 </head>
+
 <body>
-    
+    <div class="both_col">
+        <div class="col_1">
+            <div class="an_loan_amount field">
+                <label for="loan_amount">Enter Loan Amount</label><br>
+                <input class="CurrencyInput" placeholder="$" type="text" name="" id="loan_amount" data-type="dollar"
+                    min="0" oninput="updateMortgage()" onchange="validateCurrencyInput(this)" required>
+            </div>
+            <div class="an_interest_rate field">
+                <label for="interest_rate">Enter Annual Interest Rate</label><br>
+                <input class="CurrencyInput" placeholder="$" type="text" name="" id="interest_rate"
+                    data-type="persentage" min="0" oninput="updateMortgage()" onchange="validateCurrencyInput(this)"
+                    required>
+            </div>
+            <div class="an_loan_years field">
+                <label for="loan_years">Enter Term of Loan in Years</label><br>
+                <input class="CurrencyInput" placeholder="$" type="text" name="" id="loan_years" data-type="dollar"
+                    min="0" oninput="updateMortgage()" onchange="validateCurrencyInput(this)" required>
+            </div>
+            <div class="an_additional_amount field">
+                <label for="additional_amount">Enter Additional Amount</label><br>
+                <input class="CurrencyInput" placeholder="$" type="text" name="" id="additional_amount"
+                    data-type="dollar" min="0" oninput="updateMortgage()" onchange="validateCurrencyInput(this)"
+                    required>
+            </div>
+        </div>
+        <div class="col_2">
+            <div class="monthly">
+                <p class="monthly_p">Monthly Payments</p>
+                <p id="monthly_id"></p>
+            </div>
+            <div class="monthly_extra">
+                <p class="monthly_extra_p">Monthly Payments & Extra Payment</p>
+                <p id="monthly_extra_id"></p>
+            </div>
+            <div class="chart_div">
+                <div id="donut-chart"></div>
+                <p class="chart_p">Break-down of Monthly Payment</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="mor_sm_cal.js"></script>
 </body>
+
 </html>
