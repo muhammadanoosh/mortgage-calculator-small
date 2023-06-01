@@ -37,3 +37,31 @@
 
 
 </script>
+
+
+
+
+
+
+
+
+
+
+function calculateMonthlyPayment(principal, annualInterestRate, termInYears) {
+let monthlyInterestRate = annualInterestRate / (100 * 12);
+let numberOfPayments = termInYears * 12;
+let denominator = Math.pow((1 + monthlyInterestRate), numberOfPayments) - 1;
+
+let monthlyPayment = (principal * monthlyInterestRate * Math.pow((1 + monthlyInterestRate), numberOfPayments)) /
+denominator;
+
+return monthlyPayment;
+}
+
+// To use the function:
+let loanAmount = 100000;
+let annualInterest = 10;
+let termOfLoanInYears = 10;
+let monthlyPayment = calculateMonthlyPayment(loanAmount, annualInterest, termOfLoanInYears);
+
+console.log(`The monthly payment is $${monthlyPayment.toFixed(2)}`);

@@ -1,4 +1,149 @@
-.both_col{
-    display: flex;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
+
+
+.both_col {
+    padding: 20px 0 ;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    display: flex;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+label {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+p {
+    font-weight: bold;
+}
+
+
+.loan_amount_input {
+    border: 2px solid #efefef;
+    display: flex;
+    padding: 0px 10px 0px 0px;
+    border-radius: 1rem;
+}
+
+.CurrencyInput {
+    width: 72%;
+    border: none;
+    padding: 10px 0px 10px 0px;
+    border-radius: 0px 10px 10px 0px;
+}
+
+
+span {
+    background-color: #efefef !important;
+    border-radius: 1rem 0 0 1rem;
+    color: #a1a1a1;
+    font-weight: bold;
+    padding: 10px 10px 10px 10px;
+}
+
+
+
+
+
+
+
+
+.interest_rate_input {
+    border: 2px solid #efefef;
+    display: flex;
+    padding: 0px 10px 0px 0px;
+    border-radius: 1rem;
+}
+
+.interestinput {
+    width: 72%;
+    border: none;
+    padding: 10px 0px 10px 0px;
+    border-radius: 0px 10px 10px 0px;
+}
+
+.loan_years_input {
+    border: 2px solid #efefef;
+    display: flex;
+    padding: 0px 10px 0px 0px;
+    border-radius: 1rem;
+}
+
+.yearinput {
+    width: 72%;
+    border: none;
+    padding: 10px 0px 10px 0px;
+    border-radius: 0px 10px 10px 0px;
+}
+
+.additional_amount_input {
+    border: 2px solid #efefef;
+    display: flex;
+    padding: 0px 10px 0px 0px;
+    border-radius: 1rem;
+}
+
+
+
+.fa-chevron-up {
+    position: relative;
+    top: 10px;
+}
+
+.fa-chevron-down {
+    position: relative;
+    top: 10px;
+}
+
+
+.col_2 {
+    padding-top: 51px;
+    margin-left: 50px;
+}
+
+.btn_more_option button {
+    border: none;
+    background-image: linear-gradient(to right, #2f4e9d 0%, #4573eb 51%);
+    margin: 10px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+
+.btn_more_option button:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+.monthly_p {
+    width: 100%;
+    text-align: center;
+}
+
+.chart_div {
+    width: 100%;
+    justify-content: center;
+}
+
+.field {
+    margin-bottom: 20px;
+}

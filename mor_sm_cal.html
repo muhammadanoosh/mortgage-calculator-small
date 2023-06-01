@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="mor_sm_cal.css">
     <title>Mortgage Small Calculator</title>
 </head>
@@ -13,26 +14,46 @@
     <div class="both_col">
         <div class="col_1">
             <div class="an_loan_amount field">
-                <label for="loan_amount">Enter Loan Amount</label><br>
-                <input class="CurrencyInput" placeholder="$" type="text" name="" id="loan_amount" data-type="dollar"
-                    min="0" oninput="updateMortgage()" onchange="validateCurrencyInput(this)" required>
+                <label for="loan_amount_label">Enter Loan Amount</label><br>
+                <div class="loan_amount_input">
+                    <span class="la_span">$</span>
+                    <input class="CurrencyInput" placeholder="" type="text" name="" id="loan_amount" data-type="dollar"
+                        min="0" oninput="calculateMonthlyPayment()" onchange="validateCurrencyInput(this)" required>
+                    <i class="fa-solid fa-chevron-up" onclick="changeInputValue('up', 'loan_amount')"></i>
+                    <i class="fa-solid fa-chevron-down" onclick="changeInputValue('down', 'loan_amount')"></i>
+                </div>
             </div>
             <div class="an_interest_rate field">
-                <label for="interest_rate">Enter Annual Interest Rate</label><br>
-                <input class="CurrencyInput" placeholder="$" type="text" name="" id="interest_rate"
-                    data-type="persentage" min="0" oninput="updateMortgage()" onchange="validateCurrencyInput(this)"
-                    required>
+                <label for="interest_rate_label">Enter Annual Interest Rate</label><br>
+                <div class="interest_rate_input">
+                    <span class="ir_span">%</span>
+                    <input class="interestinput" placeholder="" type="text" name="" id="interest_rate"
+                        data-type="percentage" min="0" oninput="calculateMonthlyPayment()" required>
+                    <i class="fa-solid fa-chevron-up" onclick="changeInputValue('up', 'interest_rate')"></i>
+                    <i class="fa-solid fa-chevron-down" onclick="changeInputValue('down', 'interest_rate')"></i>
+                </div>
             </div>
+
             <div class="an_loan_years field">
-                <label for="loan_years">Enter Term of Loan in Years</label><br>
-                <input class="CurrencyInput" placeholder="$" type="text" name="" id="loan_years" data-type="dollar"
-                    min="0" oninput="updateMortgage()" onchange="validateCurrencyInput(this)" required>
+                <label for="loan_years_label">Enter Term of Loan in Years</label><br>
+                <div class="loan_years_input">
+                    <span class="yr_span">Yr</span>
+                    <input class="yearinput" placeholder="" type="text" name="" id="loan_years" data-type="dollar"
+                        min="0" oninput="calculateMonthlyPayment()" required>
+                    <i class="fa-solid fa-chevron-up" onclick="changeInputValue('up', 'loan_years')"></i>
+                    <i class="fa-solid fa-chevron-down" onclick="changeInputValue('down', 'loan_years')"></i>
+                </div>
             </div>
             <div class="an_additional_amount field">
-                <label for="additional_amount">Enter Additional Amount</label><br>
-                <input class="CurrencyInput" placeholder="$" type="text" name="" id="additional_amount"
-                    data-type="dollar" min="0" oninput="updateMortgage()" onchange="validateCurrencyInput(this)"
-                    required>
+                <label for="additional_amount_label">Enter Additional Amount</label><br>
+                <div class="additional_amount_input">
+                    <span class="aa_span">$</span>
+                    <input class="CurrencyInput" placeholder="" type="text" name="" id="additional_amount"
+                        data-type="dollar" min="0" oninput="calculateMonthlyPayment()"
+                        onchange="validateCurrencyInput(this)" required>
+                    <i class="fa-solid fa-chevron-up" onclick="changeInputValue('up', 'additional_amount')"></i>
+                    <i class="fa-solid fa-chevron-down" onclick="changeInputValue('down', 'additional_amount')"></i>
+                </div>
             </div>
         </div>
         <div class="col_2">
@@ -47,6 +68,9 @@
             <div class="chart_div">
                 <div id="donut-chart"></div>
                 <p class="chart_p">Break-down of Monthly Payment</p>
+            </div>
+            <div class="btn_more_option">
+                <button class="">MORE OPTIONS</button>
             </div>
         </div>
     </div>
