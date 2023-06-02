@@ -3,25 +3,34 @@
 let loanAmount;
 let annualInterest;
 let termOfLoanInYears;
-
-
+let additionalamount;
+let monthlyPayment;
+generateChart([50, 50], ['#1069b5', '#86c8ff']);
 function calculateMonthlyPayment() {
-    loanAmount = parseFloat(document.getElementById('loan_amount').value);
+    loanAmount = document.getElementById("loan_amount").value;
+    const loanAmountValue = parseCurrencyString(loanAmount);
     annualInterest = parseFloat(document.getElementById('interest_rate').value);
     termOfLoanInYears = parseFloat(document.getElementById('loan_years').value);
-
-    if (loanAmount) {
-        let monthlyInterestRate = annualInterest / (100 * 12);
-        let numberOfPayments = termOfLoanInYears * 12;
-        let denominator = Math.pow((1 + monthlyInterestRate), numberOfPayments) - 1;
-
-        let monthlyPayment = (loanAmount * monthlyInterestRate * Math.pow((1 + monthlyInterestRate), numberOfPayments)) / denominator;
+    additionalamount = document.getElementById("additional_amount").value;
+    const additionalamountValue = parseCurrencyString(additionalamount);
+    if (loanAmountValue && annualInterest && termOfLoanInYears) {
+        let numerator = loanAmountValue + ((annualInterest * loanAmountValue / 100) * termOfLoanInYears)
+        let denomenator = termOfLoanInYears * 12
+        monthlyPayment = numerator / denomenator
         if (monthlyPayment) {
             const formattedmonthlyPayment = formatCurrency(monthlyPayment);
             document.getElementById("monthly_id").innerHTML = "$" + formattedmonthlyPayment;
         }
+        if (additionalamountValue) {
+            const formattedmonthlyAndExtra = formatCurrency(additionalamountValue);
+            document.getElementById("monthly_extra_id").innerHTML = "$" + formattedmonthlyAndExtra;
+            removeChart();
+            generateChart([monthlyPayment, additionalamountValue], ['#1069b5', '#86c8ff']);
+        }
     }
 }
+
+
 
 
 function formatCurrency(number) {
@@ -40,35 +49,6 @@ function formatCurrency(number) {
 
 
 
-
-
-
-function updateMortgage() {
-    if (loanAmountDateType.dataset.type == "dollar") {
-        // Get the source field element by ID
-
-
-
-        let MortgageAmount = PV - DP;
-
-        // Get the target field element by ID
-        const targetField = document.getElementById('mortgage_amount');
-
-        // Check if MortgageAmount is less than 0
-        if (MortgageAmount < 0) {
-            // Reset property value and down payment to zero
-            propertyValueElement.value = "0";
-            downPaymentElement.value = "0";
-            targetField.value = "0";
-            displayErrorMessage("Mortgage cannot go to negative.");
-
-        } else if (MortgageAmount) {
-            // Set the target field's value to the source field's value
-            targetField.value = MortgageAmount;
-            displayErrorMessage("");
-        }
-    }
-}
 
 function parseCurrencyString(currencyString) {
     // Remove commas and parse the number as a floating-point value
@@ -91,38 +71,53 @@ function parseCurrencyString(currencyString) {
 
 
 //Donut Bar chart
-let data = [20, 30, 50]; // You can adjust this data accordingly
 
-let svg = d3.select('#donut-chart')
-    .append('svg')
-    .attr('width', 200)
-    .attr('height', 200),
-    width = +svg.attr('width'),
-    height = +svg.attr('height'),
-    radius = Math.min(width, height) / 2,
-    g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+function generateChart(data, colorMap) {
+    let svg = d3.select('#donut-chart')
+        .append('svg')
+        .attr('width', 200)
+        .attr('height', 200),
+        width = +svg.attr('width'),
+        height = +svg.attr('height'),
+        radius = Math.min(width, height) / 2,
+        g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
-let color = d3.scaleOrdinal(['#1069b5', '#86c8ff', '#b9d2e8']); // colors for the sections
+    let color = d3.scaleOrdinal(colorMap); // colors for the sections
 
-let pie = d3.pie();
+    let pie = d3.pie();
 
-let arc = d3.arc()
-    .innerRadius(radius - 50)  // Adjust inner radius to make the donut hole smaller
-    .outerRadius(radius - 10); // Adjust outer radius
+    let arc = d3.arc()
+        .innerRadius(radius - 50)  // Adjust inner radius to make the donut hole smaller
+        .outerRadius(radius - 10); // Adjust outer radius
 
-let pieData = pie(data);
+    let pieData = pie(data);
 
-let arcs = g.selectAll('arc')
-    .data(pieData)
-    .enter()
-    .append('g')
-    .attr('class', 'arc');
+    let arcs = g.selectAll('arc')
+        .data(pieData)
+        .enter()
+        .append('g')
+        .attr('class', 'arc');
 
-arcs.append('path')
-    .attr('d', arc)
-    .style('fill', function (d) { return color(d.data); })
-    .style('stroke', '#ffffff')   // Add white color stroke
-    .style('stroke-width', '2');  // Specify stroke width
+    arcs.append('path')
+        .attr('d', arc)
+        .style('fill', function (d, i) { return color(i); }) // color is mapped to the index now
+        .style('stroke', '#ffffff')   // Add white color stroke
+        .style('stroke-width', '2');  // Specify stroke width
+
+    // To center the donut chart on the page, add CSS
+    d3.select('#donut-chart')
+        .style('display', 'flex')
+        .style('justify-content', 'center')
+        .style('align-items', 'center');
+}
+function removeChart() {
+    d3.select('#donut-chart').select('svg').remove();
+}
+
+
+// Call the function with your data and color map
+
+
 
 
 
@@ -133,38 +128,38 @@ arcs.append('path')
 //Input Check and currency pattern
 
 
-function displayErrorMessage(message) {
-    const errorElement = document.getElementById("error_message");
-    if (message) {
-        errorElement.innerHTML = message;
+// function displayErrorMessage(message) {
+//     const errorElement = document.getElementById("error_message");
+//     if (message) {
+//         errorElement.innerHTML = message;
 
-        //STYLE
-        errorElement.style.marginLeft = "10px";
-        errorElement.style.borderRadius = "20px";
-        errorElement.style.padding = "18px 0";
-        errorElement.style.textAlign = "center";
-        errorElement.style.maxWidth = "54%";
-        errorElement.style.color = "#721c24";
-        errorElement.style.backgroundColor = "#f8d7da";
-        errorElement.style.borderColor = "#721c24";
-    }
-    else {
-        errorElement.innerHTML = "";
-        // Clear all styles
-        errorElement.style.marginLeft = null;
-        errorElement.style.borderRadius = null;
-        errorElement.style.padding = null;
-        errorElement.style.textAlign = null;
-        errorElement.style.maxWidth = null;
-        errorElement.style.color = null;
-        errorElement.style.backgroundColor = null;
-        errorElement.style.borderColor = null;
-    }
-}
+//         //STYLE
+//         errorElement.style.marginLeft = "10px";
+//         errorElement.style.borderRadius = "20px";
+//         errorElement.style.padding = "18px 0";
+//         errorElement.style.textAlign = "center";
+//         errorElement.style.maxWidth = "54%";
+//         errorElement.style.color = "#721c24";
+//         errorElement.style.backgroundColor = "#f8d7da";
+//         errorElement.style.borderColor = "#721c24";
+//     }
+//     else {
+//         errorElement.innerHTML = "";
+//         // Clear all styles
+//         errorElement.style.marginLeft = null;
+//         errorElement.style.borderRadius = null;
+//         errorElement.style.padding = null;
+//         errorElement.style.textAlign = null;
+//         errorElement.style.maxWidth = null;
+//         errorElement.style.color = null;
+//         errorElement.style.backgroundColor = null;
+//         errorElement.style.borderColor = null;
+//     }
+// }
 function validateCurrencyInput(inputElement) {
     // Check if the input is a number
     if (inputElement.validity.badInput || inputElement.value === "") {
-        displayErrorMessage("Please enter a valid number.");
+        // displayErrorMessage("Please enter a valid number.");
         inputElement.value = "";
         inputElement.focus();
         return false;
@@ -186,7 +181,7 @@ function validateCurrencyInput(inputElement) {
     inputElement.value = formatCurrency(parseFloat(sanitizedInput));
 
     // Clear the error message
-    displayErrorMessage("");
+    // displayErrorMessage("");
 
     return true;
 }
@@ -196,10 +191,13 @@ function validateCurrencyInput(inputElement) {
 function changeInputValue(direction, inputId) {
     // get the input element
     var inputElement = document.getElementById(inputId);
-    
+
     // get the current value of the input element
-    var currentValue = parseFloat(inputElement.value);
-    
+    var currentValueString = inputElement.value.replace(/[^0-9.-]+/g, ""); // remove currency symbol and other non-number characters
+
+    // parse the current value to a number
+    var currentValue = parseFloat(currentValueString);
+
     // check if the current value is a valid number
     if (isNaN(currentValue)) {
         currentValue = 0;
@@ -214,10 +212,32 @@ function changeInputValue(direction, inputId) {
             currentValue = 0;
         }
     }
-    
+
+    // convert the value back to a string with a currency symbol
+    var newValueString = currentValue.toFixed(0);
+
     // update the value of the input element
-    inputElement.value = currentValue;
+    inputElement.value = newValueString;
 
     // recalculate the monthly payment
     calculateMonthlyPayment();
+}
+
+
+function validateInterestRate() {
+    // Get the input element
+    var interestRateElement = document.getElementById('interest_rate');
+
+    // Check if the value is empty
+    if (interestRateElement.value === "") {
+        // If it's empty, set it to 5%
+        interestRateElement.value = "5";
+    }
+
+    // Check if the value is outside the range 1-100
+    var interestRateValue = parseFloat(interestRateElement.value);
+    if (isNaN(interestRateValue) || interestRateValue < 1 || interestRateValue > 100) {
+        // If it's outside the range, set it to 5%
+        interestRateElement.value = "5";
+    }
 }

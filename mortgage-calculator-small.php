@@ -1,16 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+<?
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="mor_sm_cal.css">
-    <title>Mortgage Small Calculator</title>
-</head>
+/**
+ * Plugin Name: Mortgage Calculator
+ * 
+ */
 
-<body>
+function enqueueScripts()
+{
+    wp_register_style('calculatorstyle', plugins_url('/style.css', __FILE__), array(), false);
+    wp_register_script('smcalscripts', plugins_url('/mor_sm_cal.js', __FILE__), [], false, false);
+    wp_register_script('libscripts','https://d3js.org/d3.v5.min.js', [], false, false);
+
+}
+add_action("wp_enqueue_scripts", 'enqueueScripts');
+
+
+
+function runSmallCalculator()
+{
+    wp_enqueue_script('smcalscripts');
+    wp_enqueue_script('libscripts');
+    wp_enqueue_style('calculatorstyle');
+    $html = '
     <div class="both_col">
         <div class="col_1">
             <div class="an_loan_amount field">
@@ -19,8 +30,8 @@
                     <span class="la_span">$</span>
                     <input class="CurrencyInput input_feild" placeholder="" type="text" name="" id="loan_amount"
                         data-type="dollar" min="0" oninput="" onchange="validateCurrencyInput(this)" required>
-                    <i class="fa-solid fa-chevron-up" onclick="changeInputValue('up', 'loan_amount')"></i>
-                    <i class="fa-solid fa-chevron-down " onclick="changeInputValue('down', 'loan_amount')"></i>
+                    <i class="fa-solid fa-chevron-up" onclick="changeInputValue(\'up\', \'loan_amount\')"></i>
+                    <i class="fa-solid fa-chevron-down " onclick="changeInputValue(\'down\', \'loan_amount\')"></i>
                 </div>
             </div>
             <div class="an_interest_rate field">
@@ -29,8 +40,8 @@
                     <span class="ir_span">%</span>
                     <input class="interestinput input_feild" placeholder="" type="text" name="" id="interest_rate"
                         data-type="percentage" min="0" onchange="validateInterestRate()" required>
-                    <i class="fa-solid fa-chevron-up " onclick="changeInputValue('up', 'interest_rate')"></i>
-                    <i class="fa-solid fa-chevron-down " onclick="changeInputValue('down', 'interest_rate')"></i>
+                    <i class="fa-solid fa-chevron-up " onclick="changeInputValue(\'up\', \'interest_rate\')"></i>
+                    <i class="fa-solid fa-chevron-down " onclick="changeInputValue(\'down\', \'interest_rate\')"></i>
                 </div>
             </div>
 
@@ -40,8 +51,8 @@
                     <span class="yr_span">Y</span>
                     <input class="yearinput input_feild" placeholder="" type="text" name="" id="loan_years"
                         data-type="dollar" min="0" onchange="calculateMonthlyPayment()" required>
-                    <i class="fa-solid fa-chevron-up" onclick="changeInputValue('up', 'loan_years')"></i>
-                    <i class="fa-solid fa-chevron-down" onclick="changeInputValue('down', 'loan_years')"></i>
+                    <i class="fa-solid fa-chevron-up" onclick="changeInputValue(\'up\', \'loan_years\')"></i>
+                    <i class="fa-solid fa-chevron-down" onclick="changeInputValue(\'down\', \'loan_years\')"></i>
                 </div>
             </div>
             <div class="an_additional_amount field">
@@ -51,8 +62,8 @@
                     <input class="CurrencyInput input_feild" placeholder="" type="text" name="" id="additional_amount"
                         data-type="dollar" min="0" oninput=""
                         onchange="validateCurrencyInput(this) ,calculateMonthlyPayment()" required>
-                    <i class="fa-solid fa-chevron-up" onclick="changeInputValue('up', 'additional_amount')"></i>
-                    <i class="fa-solid fa-chevron-down" onclick="changeInputValue('down', 'additional_amount')"></i>
+                    <i class="fa-solid fa-chevron-up" onclick="changeInputValue(\'up\', \'additional_amount\')"></i>
+                    <i class="fa-solid fa-chevron-down" onclick="changeInputValue(\'down\', \'additional_amount\')"></i>
                 </div>
             </div>
         </div>
@@ -77,12 +88,7 @@
                 <button class="">MORE OPTIONS</button>
             </div>
         </div>
-    </div>
-
-
-
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="mor_sm_cal.js"></script>
-</body>
-
-</html>
+    </div>';
+    return $html;
+}
+add_shortcode('runSmallCalculator', 'runSmallCalculator');

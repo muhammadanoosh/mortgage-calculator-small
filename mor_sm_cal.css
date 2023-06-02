@@ -10,7 +10,7 @@ body {
 
 
 .both_col {
-    padding: 20px 0 ;
+    padding: 20px 0;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -26,6 +26,7 @@ label {
 
 p {
     font-weight: bold;
+    text-align: center;
 }
 
 
@@ -46,7 +47,7 @@ p {
 
 span {
     background-color: #efefef !important;
-    border-radius: 1rem 0 0 1rem;
+    border-radius: 12px 0 0 12px;
     color: #a1a1a1;
     font-weight: bold;
     padding: 10px 10px 10px 10px;
@@ -98,11 +99,13 @@ span {
 
 .fa-chevron-up {
     position: relative;
-    top: 10px;
+    right: -15px;
+    top: 12px;
 }
 
 .fa-chevron-down {
     position: relative;
+    right: -20px;
     top: 10px;
 }
 
@@ -147,3 +150,36 @@ span {
 .field {
     margin-bottom: 20px;
 }
+
+.monthly_extra_div {
+    height: 30px;
+}
+
+.monthly_extra_p {
+    color: grey;
+}
+
+.monthly_div {
+    height: 30px;
+}
+
+.monthly_p {
+    color: grey;
+}
+
+.chart_p {
+    color: grey;
+}
+
+.input_feild {
+    color: #1a6fb8;
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+}
+
+#donut-chart {
+    height: 200px;
+    width: 200px;
+}
+
